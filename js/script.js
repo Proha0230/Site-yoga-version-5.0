@@ -16,7 +16,10 @@ let tab = document.querySelectorAll('.info-header-tab'),
     photoBTN = document.querySelector('.photo-btn'),
     aboutBTN = document.querySelector('.about-btn'),
     priceBTN = document.querySelector('.price-btn'),
-    contactsBTN = document.querySelector('.contacts-btn');
+    contactsBTN = document.querySelector('.contacts-btn'),
+    more = document.querySelectorAll('.description-btn, .more'),
+    overlay = document.querySelector('.overlay'),
+    close = document.querySelector('.popup-close');
 
     function hideTabContent (a) 
     {
@@ -78,8 +81,7 @@ let tab = document.querySelectorAll('.info-header-tab'),
                 timerAll.style.display = 'none';
                 morebtn.style.display = 'none';
                 contentAll.style.minHeight = '1000px';
-               
-
+                window.scrollTo(0,520);
             }
         });
 
@@ -93,7 +95,7 @@ let tab = document.querySelectorAll('.info-header-tab'),
                 timerAll.style.display = 'none';
                 morebtn.style.display = 'none';
                 contentAll.style.minHeight = '1000px';
-               
+                window.scrollTo(0,110);
 
             }
         });
@@ -109,7 +111,7 @@ let tab = document.querySelectorAll('.info-header-tab'),
                 morebtn.style.display = 'block';
                 contentAll.style.minHeight = '1000px';
                 timerAll.style.marginTop = '0px';
-               
+                window.scrollTo(0,520);
 
             }
         });
@@ -126,7 +128,7 @@ let tab = document.querySelectorAll('.info-header-tab'),
                 contentAll.style.minHeight = '1000px';
                 contacts.style.width = '100%';
                 contacts.style.marginTop = '0px';
-               
+                window.scrollTo(0,700);
 
             }
         });
@@ -186,11 +188,33 @@ let tab = document.querySelectorAll('.info-header-tab'),
 
 setClock('timer', deadline);
 
+// more.addEventListener('click', function(){
+//     overlay.style.display = 'block';
+//     this.classList.add('more-splash');
+//     document.body.style.overflow = 'hidden';
+// });
+
+// close.addEventListener('click', function(){
+//     overlay.style.display = 'none';
+//     more.classList.remove('more-splash');
+//     document.body.style.overflow = '';
+// });
 
 
-
-
-
-
+more.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        overlay.style.display = 'block';
+        this.classList.add('more-splash');
+        document.body.style.overflow = 'hidden';   
+    })
 });
 
+close.addEventListener('click', function() {
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+    more.forEach(function(btn) {
+        btn.classList.remove('more-splash');
+    })
+});
+
+});
