@@ -217,4 +217,90 @@ close.addEventListener('click', function() {
     })
 });
 
+let message ={
+    loading: 'Загрузка...',
+    success: 'Спасибо! Скоро мы с вами свяжемся!',
+    failure: 'Что-то пошло не так...'
+};
+
+// В блоке Узнать Больше и Узнать Подробнее
+
+let form = document.querySelector('.main-form'),
+    input = form.getElementsByTagName('input'),
+    statusMessage = document.createElement('div');
+
+statusMessage.classList.add ('status');
+form.addEventListener('submit', function (event){
+    event.preventDefault();
+    form.appendChild(statusMessage);
+    let request = new XMLHttpRequest();
+    request.open ('POST', 'server.php');
+
+    request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    let formData = new FormData(form);
+    let obj = {};
+    formData.forEach(function(value, key) {
+        obj[key] = value;
+    });
+    let json = JSON.stringify(obj);
+    request.send(json);
+
+    request.addEventListener ('readystatechange', function(){
+        if(request.readyState < 4) {
+            statusMessage.innerHTML = message.loading;
+        } else if (request.readyState === 4 && request.status == 200) {
+            statusMessage.innerHTML = message.success;
+        } else {
+            statusMessage.innerHTML = message.failure;
+        }
+    });
+
+for (let i=0; i<input.length; i++) {
+    input [i].value = '';
+}
+});
+
+
+// В блоке контактов
+
+let formContact = document.querySelector("#form"),
+    inputContact = formContact.getElementsByTagName('input'),
+    messageContact = document.createElement('div');
+    messageContact.classList.add('status');
+    messageContact.style.color = "white";
+    messageContact.style.marginTop = "15px";
+
+    formContact.addEventListener('submit', function(event){
+    event.preventDefault();
+    formContact.appendChild(messageContact);
+
+    let request = new XMLHttpRequest();
+    request.open('POST', 'server.php');
+    request.setRequestHeader('content-type', 'application/JSON; charset=utf-8');
+    let formData = new FormData(formContact);
+    let obj = {};
+    formData.forEach(function(value,key){
+        obj[key] = value;
+    });
+    let json = JSON.stringify(obj);
+    request.send(json);
+
+    request.addEventListener ('readystatechange', function(){
+        if(request.readyState < 4) {
+            messageContact.innerHTML = message.loading;
+        } else if (request.readyState === 4 && request.status == 200) {
+            messageContact.innerHTML = message.success;
+        } else {
+            messageContact.innerHTML = message.failure;
+        }
+    });
+
+for (let i=0; i<inputContact.length; i++) {
+    inputContact [i].value = '';
+}
+});
+
+
+
+
 });
